@@ -1,0 +1,18 @@
+orbit with time climb  DONE
+scalar system size DONE
+
+indentation and advance of time (possibility to go to specific dates)
+
+draw orbits dynamically 
+
+selection buttons
+selection of planets and objects by click
+
+pivot camera in object selection
+
+exports to paths, colors and fonts
+
+
+
+heavenly scale
+galactic watch
