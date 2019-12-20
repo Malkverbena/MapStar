@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/celestial_body.gd" type="Script" id=1]
+
+[sub_resource type="SphereMesh" id=1]
+
+[node name="celestial_body" type="Spatial"]
+script = ExtResource( 1 )
+body_type = 1
+body_name = "Earth"
+
+[node name="body" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = null

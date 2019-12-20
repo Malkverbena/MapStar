@@ -1,0 +1,179 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://scripts/map_system.gd" type="Script" id=1]
+[ext_resource path="res://scripts/scales.gd" type="Script" id=2]
+[ext_resource path="res://scripts/camera.gd" type="Script" id=3]
+[ext_resource path="res://scenes/celestial_body.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/planets_material/system_solar/sun.material" type="Material" id=5]
+[ext_resource path="res://assets/planets_material/system_solar/mercury.material" type="Material" id=6]
+[ext_resource path="res://assets/planets_material/system_solar/venus.tres.material" type="Material" id=7]
+[ext_resource path="res://assets/planets_material/system_solar/earth.tres.material" type="Material" id=8]
+[ext_resource path="res://assets/planets_material/system_solar/mars.material" type="Material" id=10]
+[ext_resource path="res://assets/planets_material/system_solar/jupter.tres.material" type="Material" id=11]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 1, 0, 0, 1 )
+emission_enabled = true
+emission = Color( 1, 0, 0, 1 )
+emission_energy = 13.05
+emission_operator = 0
+emission_on_uv2 = false
+
+[node name="map_system" type="Control"]
+margin_right = 600.0
+margin_bottom = 300.0
+script = ExtResource( 1 )
+
+[node name="HUD" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="OptionButton" type="OptionButton" parent="HUD"]
+margin_left = 20.0
+margin_top = 12.0
+margin_right = 119.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="system" type="Spatial" parent="."]
+script = ExtResource( 2 )
+OrbitScale = 925.0
+CurrentTimeScale = 0.5
+TimaScaleFactor = 5.0
+
+[node name="cam" type="Position3D" parent="system"]
+script = ExtResource( 3 )
+
+[node name="camera" type="Camera" parent="system/cam"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20 )
+current = true
+size = 315.177
+far = 8192.0
+
+[node name="sun" parent="system" instance=ExtResource( 4 )]
+body_type = 0
+body_name = "Sun"
+OrbitParameters = {
+"axial_tilt": 0.001,
+"eccentricity": 0.001,
+"long_ascending_node": 0.001,
+"mass": 1.0,
+"orbital_period": 0.001,
+"perihelion": 0.001,
+"radius": 12756.2,
+"rotation_pediod": 1.0
+}
+
+[node name="body" parent="system/sun" index="0"]
+material/0 = ExtResource( 5 )
+
+[node name="mercury" parent="system" instance=ExtResource( 4 )]
+body_name = "Mercury"
+OrbitParameters = {
+"axial_tilt": 0.01,
+"eccentricity": 0.205,
+"long_ascending_node": 48.331,
+"mass": 0.055,
+"orbital_period": 87.969,
+"perihelion": 0.307,
+"radius": 4879.4,
+"rotation_pediod": 58.646
+}
+
+[node name="body" parent="system/mercury" index="0"]
+material/0 = ExtResource( 6 )
+
+[node name="venus" parent="system" instance=ExtResource( 4 )]
+body_name = "Venus"
+OrbitParameters = {
+"axial_tilt": 177.36,
+"eccentricity": 0.006,
+"long_ascending_node": 76.68,
+"mass": 0.815,
+"orbital_period": 224.7,
+"perihelion": 0.718,
+"radius": 12103.6,
+"rotation_pediod": 243.021
+}
+
+[node name="body" parent="system/venus" index="0"]
+material/0 = ExtResource( 7 )
+
+[node name="earth" parent="system" instance=ExtResource( 4 )]
+OrbitParameters = {
+"axial_tilt": 23.26,
+"eccentricity": 0.016,
+"long_ascending_node": 348.739,
+"mass": 1.0,
+"orbital_period": 365.2,
+"perihelion": 0.9832,
+"radius": 12756.2,
+"rotation_pediod": 0.997
+}
+
+[node name="body" parent="system/earth" index="0"]
+material/0 = ExtResource( 8 )
+
+[node name="moon" parent="system/earth" instance=ExtResource( 4 )]
+OrbitParameters = {
+"axial_tilt": 0.0,
+"eccentricity": 0.9,
+"long_ascending_node": 0.0,
+"mass": 1.0,
+"orbital_period": 5.0,
+"perihelion": 0.03,
+"radius": 1.0,
+"rotation_pediod": 30.0
+}
+
+[node name="body" parent="system/earth/moon" index="0"]
+material/0 = SubResource( 1 )
+
+[node name="mars" parent="system" instance=ExtResource( 4 )]
+body_name = "Mars"
+OrbitParameters = {
+"axial_tilt": 25.19,
+"eccentricity": 0.093,
+"long_ascending_node": 49.558,
+"mass": 0.107,
+"orbital_period": 686.971,
+"perihelion": 1.381,
+"radius": 6792.4,
+"rotation_pediod": 1.026
+}
+
+[node name="body" parent="system/mars" index="0"]
+material/0 = ExtResource( 10 )
+
+[node name="jupter" parent="system" instance=ExtResource( 4 )]
+body_name = "Jupter"
+OrbitParameters = {
+"axial_tilt": 3.13,
+"eccentricity": 0.048,
+"long_ascending_node": 100.464,
+"mass": 317.8,
+"orbital_period": 4331.5,
+"perihelion": 4.95,
+"radius": 142984.0,
+"rotation_pediod": 0.413
+}
+
+[node name="body" parent="system/jupter" index="0"]
+material/0 = ExtResource( 11 )
+[connection signal="item_selected" from="HUD/OptionButton" to="system/cam" method="_on_OptionButton_item_selected"]
+
+[editable path="system/sun"]
+
+[editable path="system/mercury"]
+
+[editable path="system/venus"]
+
+[editable path="system/earth"]
+
+[editable path="system/earth/moon"]
+
+[editable path="system/mars"]
+
+[editable path="system/jupter"]

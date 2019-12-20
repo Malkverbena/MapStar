@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/planets_material/system_solar/earth.tres.material" type="Material" id=1]
+[ext_resource path="res://assets/planets_texture/solar_system/earth_clouds.jpg" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
+
+var time = 0.0
+var rot_period = 10.0
+
+func _ready():
+	set_physics_process(true)
+	set_process(true)
+
+func _process(delta):
+	time += delta
+
+
+func _physics_process(delta):
+	var rot = fmod(time, rot_period)
+	
+	var current_rot = (360/rot_period) * rot
+	$planet.rotation_degrees = Vector3(0,current_rot,0)
+	
+	$Label.text = \"Time: \" + str(rot) + \" \\nGraus:  \" + str(current_rot)
+"
+
+[sub_resource type="SphereMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 1, 1, 0.156863 )
+albedo_texture = ExtResource( 2 )
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 1.0
+subsurf_scatter_texture = ExtResource( 2 )
+
+[node name="Spatial" type="Spatial"]
+script = SubResource( 1 )
+
+[node name="planet" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+material/0 = ExtResource( 1 )
+
+[node name="atmosfere" type="MeshInstance" parent="."]
+visible = false
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.85241 )
+keep_aspect = 0
+doppler_tracking = 1
+fov = 50.6
+size = 169.91
+near = 0.01
+
+[node name="Label" type="Label" parent="."]
+margin_right = 161.0
+margin_bottom = 26.0
